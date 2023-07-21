@@ -7,6 +7,7 @@ function Home() {
 
     const {getCertificate} = useContract();
     const [certificate, setCertificate] = React.useState(null);
+    const [person, setPerson] = React.useState(null); // [name, degree, year, university, cgpa
     const [datas, setDatas] = React.useState(null);
     const [id, setId] = React.useState(null);
     const [loading, setLoading] = React.useState(false);
@@ -19,8 +20,9 @@ function Home() {
             return;
         }
         try{
-            const {image_url, data} = await getCertificate(id);
+            const {image_url, person_url, data} = await getCertificate(id);
             setCertificate(image_url);
+            setPerson(person_url);
             console.log(data);
             setDatas(data);
 
@@ -60,7 +62,7 @@ function Home() {
                     <img src={certificate} alt="" />
                 </div>
                 <div className='bg-[#233953] p-4 flex flex-col gap-8'>
-                    <img src="https://img.freepik.com/premium-photo/young-hipster-man-with-his-arms-crossed_1368-14152.jpg" alt=""
+                    <img src={person} alt=""
                         className='rounded-md w-32 h-32 mx-auto'
                     />
 

@@ -7,12 +7,13 @@ import Logo from "../../assets/default.png";
 
 
 function Header() {
+  
   const [mobileMenu, setMobileMenu] = useState(false);
 
   return (
-    <header className="border-b border-gray-700 w-screen min-h-[70px]  z-50">
+    <header className="border-b border-gray-700 w-screen min-h-[60px]  z-50">
       {/* Desktop Menu */}
-      <div className="bg-transparent flex justify-between items-center px-8 md:px-16 py-3">
+      <div className="bg-transparent flex justify-between items-center px-8 md:px-16 py-1">
         <div className="flex items-center gap-20">
           <img
             src={Logo}

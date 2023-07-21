@@ -42,8 +42,11 @@ const useContract = () => {
         const data = await response.json(); 
         const image_url ="https://"+data.image.split("/")[2] + ".ipfs.nftstorage.link/certificate.png" ;
         console.log(image_url);
+
+        const person_url = "https://"+ data.person.split("/")[2] + ".ipfs.nftstorage.link/image.png"
+        console.log("--->", person_url);
         
-        return {image_url, data};
+        return {image_url,person_url, data};
 
     }
 

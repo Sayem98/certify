@@ -20,13 +20,14 @@ function Certify() {
     const [ccid, setCcid] = React.useState(null); // IPFS CID of the certificate
 
     const [mcid, setMcid] = React.useState(null); // IPFS CID of the certificate
+    const [pcid, setPcid] = React.useState(null); // IPFS CID of the certificate
 
     const [status, setStatus] = React.useState(''); 
     const [loading, setLoading] = React.useState(false);
 
     const [name, setName] = React.useState(''); 
     const [description, setDescription] = React.useState(''); 
-    const [image, setImage] = React.useState(''); 
+    const [image, setImage] = React.useState('');
     const [attributes, setAttributes] = React.useState([]);
     const [degree, setDegree] = React.useState(''); 
     const [year, setYear] = React.useState(''); 
@@ -96,6 +97,37 @@ function Certify() {
         setLoading(false);
     }
 
+    const handlePersonIPFSUpload = async (U_files) => {
+
+        setLoading(true);
+        console.log('IPFS person Upload');
+
+        console.log(U_files);
+        const storage = new NFTStorage({ token })
+        if(U_files.length !== 0) {
+            try{
+                const cid = await storage.storeDirectory(U_files)
+                console.log({ cid })
+                
+
+                const _status = await storage.status(cid)
+                console.log(_status)
+                
+                toast('Certificate uploaded successfully');
+                setPcid(cid);
+                setStatus(2);
+            }catch(err) {
+                toast('Something went wrong with the upload');
+                console.log(err);
+            }
+
+        }else{
+            toast('Please upload a file');
+        }
+
+        setLoading(false);
+    }
+
     const handleMetadataUpload = async (e) => {
         setLoading(true);
         e.preventDefault();
@@ -111,6 +143,11 @@ function Certify() {
             return;
         }
 
+        if(pcid === null) {
+            toast('Please upload the student image');
+            return;
+        }
+
 
         // create metadata
         const metadata = {
@@ -121,6 +158,7 @@ function Certify() {
             year: year,
             cgpa: cgpa,
             university: university,
+            person: `ipfs://${pcid}`
 
         }
         
@@ -143,7 +181,7 @@ function Certify() {
             const url = "https://"+ mcid + ".ipfs.nftstorage.link/"
             console.log(url);
             toast('Metadata uploaded successfully');
-            setStatus(2);
+            setStatus(3);
         }catch(err) {
             toast('Something went wrong with the upload');
             console.log(err);
@@ -171,7 +209,24 @@ function Certify() {
                                 lastLineColor=""/>:"Upload"}</button>
         </div>}
 
-        { ccid !== null && status === 1 &&  <form className='bg-[#233953] p-6 w-[22rem] md:w-[40rem] rounded-md flex flex-col gap-8'>
+        {ccid != null && pcid == null && status === 1 && <div className='flex flex-col gap-4 w-[40rem] h-[30rem]'>
+            <h1 className='text-4xl font-semibold text-center'>Upload Image</h1>
+            <FileDropZone files={image} setFiles={setImage} />
+            <button className='bg-green-600 hover:bg-green-500 font-semibold flex justify-center items-center px-8 py-2 md:py-3' onClick={() => handlePersonIPFSUpload(image)}>{loading?<LineWave height="50"
+                                width="50"
+                                color="white"
+                                ariaLabel="line-wave"
+                                wrapperStyle={{}}
+                                wrapperClass=""
+                                visible={true}
+                                firstLineColor=""
+                                middleLineColor=""
+                                lastLineColor=""/>:"Upload"}</button>
+        </div>}
+
+
+
+        { ccid !== null && status === 2 &&  <form className='bg-[#233953] p-6 w-[22rem] md:w-[40rem] rounded-md flex flex-col gap-8'>
             <h1 className='text-2xl md:text-4xl font-semibold text-center'>RU Certifier</h1>
             <div className='flex flex-col gap-2'>
                 <label 
@@ -189,6 +244,16 @@ function Certify() {
                 <input type="text" placeholder={ccid?ccid:'Upload Certificate'} 
                     className='bg-white outline-none text-gray-600 p-2 md:p-3 rounded-md'
                     id='lastName' defaultValue = {ccid ? ccid: ''} name='ccid' readOnly
+                />
+            </div>
+
+            <div className='flex flex-col gap-2'>
+                <label 
+                    className='text-white md:text-lg font-semibold'
+                 htmlFor="lastName">Person</label>
+                <input type="text" placeholder={pcid?pcid:'Upload Certificate'} 
+                    className='bg-white outline-none text-gray-600 p-2 md:p-3 rounded-md'
+                    id='lastName' defaultValue = {pcid ? pcid: ''} name='pcid' readOnly
                 />
             </div>
 
@@ -244,7 +309,7 @@ function Certify() {
         </form>}
         
         {/* form with 2 input and a submit button */}
-        {status === 2 && <form className='bg-[#233953] p-6 w-[22rem] md:w-[40rem] rounded-md flex flex-col gap-8 -mt-72'>
+        {status === 3 && <form className='bg-[#233953] p-6 w-[22rem] md:w-[40rem] rounded-md flex flex-col gap-8 -mt-72'>
             <h1 className='text-2xl md:text-4xl font-semibold text-center'>RU Certifier</h1>
             <div className='flex flex-col gap-2'>
                 <label 
