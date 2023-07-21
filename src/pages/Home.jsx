@@ -70,13 +70,13 @@ function Home() {
                             <span>{datas.name}</span>
                         </div>
                         <div className='flex items-center gap-3'>
-                            <strong>Qualification:</strong>
-                            <span>{datas.qualification}</span>
+                            <strong>Degree:</strong>
+                            <span>{datas.degree}</span>
                         </div>
 
                         <div className='flex items-center gap-3'>
-                            <strong>Roll id:</strong>
-                            <span>{datas.id}</span>
+                            <strong>Year</strong>
+                            <span>{datas.year}</span>
                         </div>
 
                         <div className='flex items-center gap-3'>
@@ -85,8 +85,8 @@ function Home() {
                         </div>
 
                         <div className='flex items-center gap-3'>
-                            <strong>Passing Year:</strong>
-                            <span>{datas.year}</span>
+                            <strong>CGPA:</strong>
+                            <span>{datas.cgpa}</span>
                         </div>
                     </div>
                 </div>

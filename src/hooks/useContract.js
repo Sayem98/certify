@@ -35,7 +35,9 @@ const useContract = () => {
         const contract = await getContract(CONTRACT_ABI, CONTRACT_ADDRESS, "w")
         // const certificate_data = await contract.methods.certificates(id).call();
         const metadata_url = await contract.methods.tokenURI(id).call();
-        const url = "https://"+ metadata_url.split("/")[2] + ".ipfs.nftstorage.link/metadata.json"
+        console.log(metadata_url);
+        const url = "https://"+ metadata_url.split("/")[2] + ".ipfs.nftstorage.link/"
+        console.log(url);
         const response = await fetch(url.toString());
         const data = await response.json(); 
         const image_url ="https://"+data.image.split("/")[2] + ".ipfs.nftstorage.link/certificate.png" ;
