@@ -20,6 +20,7 @@ function Home() {
             return;
         }
         try{
+            console.log(id);
             const {image_url, person_url, data} = await getCertificate(id);
             setCertificate(image_url);
             setPerson(person_url);
@@ -34,8 +35,8 @@ function Home() {
 
     }
   return (
-    <div className='w-full h-[130vh]  flex justify-center items-center pt-[5rem] md:pt-[8rem]'>
-        <div className='flex w-[22rem] md:w-[40rem] flex-col items-center gap-9'>
+    <div className='w-full h-[100%] min-h-screen flex justify-center items-center pt-[5rem] md:pt-[8rem]'>
+        <div className={`flex w-[22rem] md:w-[40rem] flex-col items-center gap-9 ${certificate? "mt-[-50px]": "mt-[-350px]"}`}>
             <h1 className='text-2xl md:text-4xl font-semibold'>Certificate Verifier</h1>
             <div className='flex flex-col md:flex-row gap-6 md:gap-0 w-full items-center bg-[#233953] p-6 md:p-8'>
                 <input type="text" placeholder='Certificate ID'

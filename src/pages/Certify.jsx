@@ -14,7 +14,7 @@ function Certify() {
 
     const [receiver, setReceiver] = React.useState('');
     const [issuer, setIssuer] = React.useState('');
-    const [tokenURI, setTokenURI] = React.useState('');
+
     const [registration, setRegistration] = React.useState('');
     const [files, setFiles] = React.useState([]);
     const [ccid, setCcid] = React.useState(null); // IPFS CID of the certificate
@@ -26,9 +26,9 @@ function Certify() {
     const [loading, setLoading] = React.useState(false);
 
     const [name, setName] = React.useState(''); 
-    const [description, setDescription] = React.useState(''); 
+ 
     const [image, setImage] = React.useState('');
-    const [attributes, setAttributes] = React.useState([]);
+
     const [degree, setDegree] = React.useState(''); 
     const [year, setYear] = React.useState(''); 
     const [cgpa, setCgpa] = React.useState('');
@@ -153,12 +153,12 @@ function Certify() {
         const metadata = {
 
             name: name,
-            image: `ipfs://${ccid}`,
+            image: `ipfs://${ccid}/certificate.png`,
             degree: degree,
             year: year,
             cgpa: cgpa,
             university: university,
-            person: `ipfs://${pcid}`
+            person: `ipfs://${pcid}/image.png`
 
         }
         
@@ -361,6 +361,10 @@ function Certify() {
                                 middleLineColor=""
                                 lastLineColor=""/>:"Submit"}</button>
         </form>}
+
+        {
+            status === 4 && <div className='bg-[#233953] p-6 w-[22rem] md:w-[40rem] rounded-md flex flex-col gap-8 -mt-72'>ok</div>
+        }
     </div>
   )
 }
